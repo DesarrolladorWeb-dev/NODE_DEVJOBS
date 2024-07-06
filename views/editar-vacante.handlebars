@@ -1,0 +1,57 @@
+<main class="contenedor">
+      <form action="/vacantes/editar/{{vacante.url}}" method="POST" class="default-form">
+        <h3>Informacion General </h3>
+
+        <div class="campo">
+            <label>Titulo</label>
+            {{!-- el name debe ser igual al del modelo --}}
+            <input type="text" value="{{vacante.titulo}}" name="titulo" placeholder="Ej: React Developer" value="{{vacante.titulo}}" required> 
+        </div>
+        
+        <div class="campo">
+            <label>Empresa</label>
+            <input type="text" value="{{vacante.empresa}}" name="empresa" placeholder=" Empresa Contratar" required> 
+        </div>
+         
+        <div class="campo">
+            <label>Ubicacion</label>
+            <input type="text" value="{{vacante.ubicacion}}" name="ubicacion" placeholder=" Ej: Mexico o Remoto" required> 
+        </div>
+         
+        <div class="campo">
+            <label>Salario (USD)</label>
+            <input type="text" value="{{vacante.salario}}" name="salario" placeholder="Ej: $500USD" required> 
+        </div>
+        <div class="campo">
+            <label >Contrato</label>
+            <select name="contrato">
+                {{#tipoContrato vacante.contrato}}
+                    <option value="" disabled>--Selecciona--</option>
+                    <option value="Freelance">Freelance</option>
+                    <option value="Tiempo Completo">Tiempo Completo</option>
+                    <option value="Medio Tiempo">Medio Tiempo</option>
+                    <option value="Por Proyecto">Por Proyecto</option>
+                {{/tipoContrato}}
+            </select>
+        </div>
+        <h3>Descripcion de Puesto</h3>
+        <div class="campo descripcion">
+            <label>Descripcion</label>
+            {{!-- el id como x porque lo que se escribira en el trix se mostrar en el input como un espejo --}}
+            {{!-- y como tiene el descripcion como name se enviara con todos los datos  al hacer submit--}}
+            <input type="hidden" value="{{{vacante.descripcion}}}" id="x" name="descripcion">  
+            <trix-editor input="x"></trix-editor>
+        </div>
+        <h3>Conocimientos</h3>
+        <ul class="lista-conocimientos">  
+            {{!-- utilizamos los helpers --}}
+            {{#seleccionarSkills vacante.skills }}
+            {{/seleccionarSkills}}
+        </ul>
+        <div class="campo centrar-horizontal">
+            {{!-- el nombre es igual al skills en el modelo de la BD --}}
+            <input type="hidden" name="skills" id="skills">
+            <input type="submit" value="Guardar Cambios" class="btn btn-azul">
+        </div>
+    </form>
+</main>
